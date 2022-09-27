@@ -34,6 +34,7 @@ namespace TheDevBlog.API.Controllers
         }
 
         [HttpPost]
+        [Route("add")]
         public async Task<IActionResult> AddPost(AddPostRequest addPostRequest)
         {
             //Convert DTO to Entity
@@ -44,7 +45,8 @@ namespace TheDevBlog.API.Controllers
                 UpdateDate = addPostRequest.UpdateDate,
                 Summary = addPostRequest.Summary,
                 Visible = addPostRequest.Visible,
-                UrlHandle=addPostRequest.UrlHandle
+                UrlHandle=addPostRequest.UrlHandle,
+                FeaturedImageUrl=addPostRequest.FeaturedImageUrl
             };
             post.Id = Guid.NewGuid();
             await dbContext.Posts.AddAsync(post);
@@ -68,6 +70,7 @@ namespace TheDevBlog.API.Controllers
                 existingPost.Summary = updatePostRequest.Summary;
                 existingPost.Visible = updatePostRequest.Visible;
                 existingPost.UrlHandle = updatePostRequest.UrlHandle;
+                existingPost.FeaturedImageUrl = updatePostRequest.FeaturedImageUrl;
 
                 await dbContext.SaveChangesAsync();
                 return Ok(existingPost);
